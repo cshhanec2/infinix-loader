@@ -1,0 +1,452 @@
+<Window x:Class="LoaderNL.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loader"
+        Icon="Assets/LoaderNL.ico"
+        Width="520"
+        Height="430"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+    <Grid Background="Transparent">
+        <Border x:Name="WindowShell"
+                Width="220"
+                Height="220"
+                Margin="12"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{DynamicResource ThemeWindowBrush}"
+                BorderBrush="{DynamicResource ThemeDividerBrush}"
+                BorderThickness="1"
+                CornerRadius="20">
+            <Border.Effect>
+                <DropShadowEffect Color="#A6000000"
+                                  BlurRadius="18"
+                                  ShadowDepth="2"
+                                  Opacity="0.55" />
+            </Border.Effect>
+
+            <Grid ClipToBounds="True">
+                <Border x:Name="AmbientGlowTop"
+                        Width="310"
+                        Height="88"
+                        Margin="0,50,80,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Background="{DynamicResource ThemeGlowBrush}"
+                        CornerRadius="44"
+                        Opacity="0.18"
+                        IsHitTestVisible="False">
+                    <Border.RenderTransform>
+                        <TranslateTransform />
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <BlurEffect Radius="66" />
+                    </Border.Effect>
+                    <Border.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                     From="-22"
+                                                     To="28"
+                                                     Duration="0:0:7.5"
+                                                     AutoReverse="True"
+                                                     RepeatBehavior="Forever" />
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.10"
+                                                     To="0.19"
+                                                     Duration="0:0:5.5"
+                                                     AutoReverse="True"
+                                                     RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Border.Triggers>
+                </Border>
+
+                <Border x:Name="AmbientGlowBottom"
+                        Width="280"
+                        Height="58"
+                        Margin="130,0,0,22"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Background="{DynamicResource ThemeGlowBrush}"
+                        CornerRadius="29"
+                        Opacity="0.12"
+                        IsHitTestVisible="False">
+                    <Border.RenderTransform>
+                        <TranslateTransform />
+                    </Border.RenderTransform>
+                    <Border.Effect>
+                        <BlurEffect Radius="62" />
+                    </Border.Effect>
+                    <Border.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                     From="24"
+                                                     To="-30"
+                                                     Duration="0:0:9"
+                                                     AutoReverse="True"
+                                                     RepeatBehavior="Forever" />
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.07"
+                                                     To="0.14"
+                                                     Duration="0:0:6.5"
+                                                     AutoReverse="True"
+                                                     RepeatBehavior="Forever" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Border.Triggers>
+                </Border>
+
+                <Grid Height="44"
+                      VerticalAlignment="Top"
+                      Background="Transparent"
+                      Panel.ZIndex="20"
+                      MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                    <StackPanel Margin="0,6,10,0"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Content="&#xE921;"
+                                ToolTip="Свернуть"
+                                AutomationProperties.Name="Свернуть окно"
+                                Click="Minimize_Click" />
+                        <Button Style="{StaticResource IconButtonStyle}"
+                                Content="&#xE8BB;"
+                                ToolTip="Закрыть"
+                                AutomationProperties.Name="Закрыть окно"
+                                Click="Close_Click" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid x:Name="MainContent"
+                      Margin="24,48,24,20"
+                      Opacity="0"
+                      RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="MainContentScale"
+                                            ScaleX="0.985"
+                                            ScaleY="0.985" />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="128" />
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Margin="0,20,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top">
+                            <Border Width="112"
+                                    Height="112"
+                                    HorizontalAlignment="Center"
+                                    Background="{DynamicResource ThemeSurfaceBrush}"
+                                    BorderBrush="{DynamicResource ThemeDividerBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="30">
+                                <Image Source="Assets/phoenix-mark.png"
+                                       Width="88"
+                                       Height="88"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Stretch="Uniform"
+                                       SnapsToDevicePixels="False"
+                                       RenderOptions.BitmapScalingMode="HighQuality"
+                                       RenderOptions.EdgeMode="Unspecified" />
+                            </Border>
+
+                            <TextBlock Margin="0,14,0,0"
+                                       Text="{Binding TitleText}"
+                                       FontSize="20"
+                                       FontWeight="SemiBold"
+                                       TextAlignment="Center" />
+
+                            <Border Margin="0,7,0,0"
+                                    Padding="7,3"
+                                    Background="{DynamicResource ThemeSurfaceBrush}"
+                                    BorderBrush="{DynamicResource ThemeDividerBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                <StackPanel HorizontalAlignment="Center"
+                                            Orientation="Horizontal">
+                                    <Ellipse Width="5"
+                                             Height="5"
+                                             Margin="0,0,6,0"
+                                             VerticalAlignment="Center">
+                                        <Ellipse.Style>
+                                            <Style TargetType="Ellipse">
+                                                <Setter Property="Fill" Value="{StaticResource WarningBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsReady}" Value="True">
+                                                        <Setter Property="Fill" Value="{StaticResource SuccessBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
+                                    </Ellipse>
+                                    <TextBlock Text="{Binding StatusText}"
+                                               MaxWidth="104"
+                                               Foreground="{StaticResource TextSecondaryBrush}"
+                                               FontSize="9.5"
+                                               TextAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap" />
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+
+                        <Button Grid.Row="1"
+                                Width="42"
+                                Height="38"
+                                Margin="0,10,0,0"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource DiscordButtonStyle}"
+                                ToolTip="Discord INFINIX"
+                                AutomationProperties.Name="Открыть Discord INFINIX"
+                                Click="Discord_Click">
+                            <Viewbox Width="20" Height="15">
+                                <Path Fill="#FFFFFF"
+                                      Data="M40.9051,0C40.2863,1.09866 39.7306,2.2352 39.2255,3.397C34.4268,2.67719 29.5396,2.67719 24.7283,3.397C24.2358,2.2352 23.6675,1.09866 23.0487,0C18.5404,0.770324 14.1458,2.12155 9.97847,4.02841C1.71959,16.2652 -0.51561,28.1863 0.595677,39.9432C5.4323,43.517 10.8498,46.2447 16.6209,47.9874C17.9216,46.2447 19.0708,44.3883 20.0558,42.4562C18.1868,41.7616 16.381,40.8903 14.6509,39.88C15.1055,39.5517 15.5475,39.2107 15.9769,38.8824C26.1174,43.6559 37.8617,43.6559 48.0148,38.8824C48.4441,39.236 48.8861,39.577 49.3407,39.88C47.6107,40.9029 45.8048,41.7616 43.9232,42.4688C44.9082,44.4009 46.0574,46.2573 47.3581,48C53.1292,46.2573 58.5467,43.5422 63.3834,39.9684C64.6967,26.3299 61.1355,14.5099 53.9753,4.04104C49.8206,2.13418 45.426,0.782952 40.9177,0.0252565L40.9051,0ZM21.4702,32.7072C18.351,32.7072 15.7622,29.8785 15.7622,26.3804C15.7622,22.8824 18.25,20.041 21.4576,20.041C24.6651,20.041 27.216,22.895 27.1655,26.3804C27.115,29.8658 24.6525,32.7072 21.4702,32.7072ZM42.5089,32.7072C39.3771,32.7072 36.8135,29.8785 36.8135,26.3804C36.8135,22.8824 39.3013,20.041 42.5089,20.041C45.7164,20.041 48.2547,22.895 48.2042,26.3804C48.1537,29.8658 45.6912,32.7072 42.5089,32.7072Z" />
+                            </Viewbox>
+                        </Button>
+                    </Grid>
+
+                    <Border Grid.Column="1"
+                            Width="1"
+                            Margin="0,8"
+                            HorizontalAlignment="Center"
+                            Background="{DynamicResource ThemeDividerBrush}"
+                            Opacity="0.7" />
+
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="42" />
+                            <RowDefinition Height="16" />
+                            <RowDefinition Height="72" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="72" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="54" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                                Width="198"
+                                Height="42"
+                                Padding="3"
+                                HorizontalAlignment="Center"
+                                Background="{DynamicResource ThemeSurfaceBrush}"
+                                BorderBrush="{DynamicResource ThemeDividerBrush}"
+                                BorderThickness="1"
+                                CornerRadius="12">
+                            <Grid Width="188" Height="34">
+                                <Border x:Name="ProfileSelectionPill"
+                                        Width="94"
+                                        Height="34"
+                                        HorizontalAlignment="Left"
+                                        Background="{DynamicResource ThemeAccentSoftBrush}"
+                                        CornerRadius="9"
+                                        IsHitTestVisible="False">
+                                    <Border.RenderTransform>
+                                        <TranslateTransform x:Name="ProfileSelectionTransform" />
+                                    </Border.RenderTransform>
+                                    <Border Width="34"
+                                            Height="2"
+                                            Margin="0,0,0,3"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Background="{DynamicResource ThemeAccentBrush}"
+                                            CornerRadius="1" />
+                                </Border>
+
+                                <StackPanel HorizontalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Panel.ZIndex="1">
+                                    <RadioButton x:Name="NlProfileChoice"
+                                                 GroupName="Profiles"
+                                                 Content="NL"
+                                                 IsChecked="True"
+                                                 Style="{StaticResource ProfileChoiceStyle}"
+                                                 AutomationProperties.Name="Профиль NL"
+                                                 Checked="ProfileChoice_Checked" />
+                                    <RadioButton x:Name="GsProfileChoice"
+                                                 GroupName="Profiles"
+                                                 Content="GS"
+                                                 Style="{StaticResource ProfileChoiceStyle}"
+                                                 AutomationProperties.Name="Профиль GS"
+                                                 Checked="ProfileChoice_Checked" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <RadioButton x:Name="CsgoStandaloneChoice"
+                                     Grid.Row="2"
+                                     GroupName="Games"
+                                     IsChecked="True"
+                                     Style="{StaticResource GameCardChoiceStyle}"
+                                     AutomationProperties.Name="CS:GO, App 4465480"
+                                     Checked="GameChoice_Checked">
+                            <Grid Margin="14,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="Assets/csgo.png"
+                                       Width="34"
+                                       Height="34"
+                                       VerticalAlignment="Center"
+                                       Stretch="Uniform"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                                <StackPanel Grid.Column="1"
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="Counter-Strike: Global Offensive"
+                                               FontSize="12.5"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap" />
+                                    <TextBlock Margin="0,4,0,0"
+                                               Text="Steam · App 4465480"
+                                               Foreground="{StaticResource TextMutedBrush}"
+                                               FontSize="10" />
+                                </StackPanel>
+                                <Ellipse Grid.Column="2"
+                                         Width="7"
+                                         Height="7"
+                                         Margin="10,0,1,0"
+                                         VerticalAlignment="Center"
+                                         Fill="{StaticResource SuccessBrush}" />
+                            </Grid>
+                        </RadioButton>
+
+                        <RadioButton x:Name="Cs2LegacyChoice"
+                                     Grid.Row="4"
+                                     GroupName="Games"
+                                     Style="{StaticResource GameCardChoiceStyle}"
+                                     AutomationProperties.Name="Counter-Strike 2 Legacy, App 730"
+                                     Checked="GameChoice_Checked">
+                            <Grid Margin="14,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="38" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="Assets/cs2.jpg"
+                                       Width="34"
+                                       Height="34"
+                                       VerticalAlignment="Center"
+                                       Stretch="Uniform"
+                                       RenderOptions.BitmapScalingMode="HighQuality" />
+                                <StackPanel Grid.Column="1"
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center">
+                                    <TextBlock Text="Counter-Strike 2 · Legacy"
+                                               FontSize="12.5"
+                                               FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"
+                                               TextWrapping="NoWrap" />
+                                    <TextBlock Margin="0,4,0,0"
+                                               Text="Steam · App 730 · csgo_legacy"
+                                               Foreground="{StaticResource TextMutedBrush}"
+                                               FontSize="10" />
+                                </StackPanel>
+                                <Ellipse Grid.Column="2"
+                                         Width="7"
+                                         Height="7"
+                                         Margin="10,0,1,0"
+                                         VerticalAlignment="Center"
+                                         Fill="{StaticResource WarningBrush}" />
+                            </Grid>
+                        </RadioButton>
+
+                        <Button Grid.Row="6"
+                                Width="292"
+                                Height="54"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding LaunchCommand}"
+                                AutomationProperties.Name="Запустить выбранную версию Counter-Strike">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock Text="&#xE768;"
+                                           Margin="0,0,9,0"
+                                           VerticalAlignment="Center"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                           FontSize="12" />
+                                <TextBlock Text="{Binding LaunchButtonText}"
+                                           VerticalAlignment="Center"
+                                           Foreground="{StaticResource TextPrimaryBrush}"
+                                           FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                <Border x:Name="LoadingOverlay"
+                        Background="{DynamicResource ThemeWindowBrush}"
+                        CornerRadius="20"
+                        Panel.ZIndex="100">
+                    <Grid Width="64"
+                          Height="64"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                        <Ellipse Width="58"
+                                 Height="58"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Stroke="{DynamicResource ThemeDividerBrush}"
+                                 StrokeThickness="1.5"
+                                 Opacity="0.85" />
+                        <Path Data="M 32,3 A 29,29 0 0 1 61,32"
+                              Stroke="{DynamicResource ThemeAccentBrush}"
+                              StrokeThickness="2.5"
+                              StrokeStartLineCap="Round"
+                              StrokeEndLineCap="Round"
+                              RenderTransformOrigin="0.5,0.5">
+                            <Path.Effect>
+                                <DropShadowEffect Color="#8042BCE8"
+                                                  BlurRadius="8"
+                                                  ShadowDepth="0"
+                                                  Opacity="0.65" />
+                            </Path.Effect>
+                            <Path.RenderTransform>
+                                <RotateTransform />
+                            </Path.RenderTransform>
+                            <Path.Triggers>
+                                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Angle"
+                                                             From="0"
+                                                             To="360"
+                                                             Duration="0:0:1.05"
+                                                             RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Path.Triggers>
+                        </Path>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

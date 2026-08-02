@@ -1,0 +1,19 @@
+.tools/
+.dotnet-home/
+.omx/
+.vs/
+bin/
+obj/
+artifacts/
+diagnostics/
+*.user
+*.suo
+*.log
+*.pdb
+
+# Private/runtime payloads are intentionally excluded from the public source tree.
+src/neverlose.dll
+src/skeet.dll
+src/LoaderNL.App/Assets/neverlose-avatar.png
+src/LoaderNL.App/Assets/neverlose-global-data.json
+src/LoaderNL.App/Assets/neverlose-libraries.zip

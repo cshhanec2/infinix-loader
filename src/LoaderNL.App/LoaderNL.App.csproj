@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>LoaderNL</AssemblyName>
+    <RootNamespace>LoaderNL.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\LoaderNL.ico</ApplicationIcon>
+    <Platforms>x86;x64</Platforms>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LoaderNL.Core\LoaderNL.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\phoenix.png" />
+    <Resource Include="Assets\phoenix-mark.png" />
+    <Resource Include="Assets\csgo.png" />
+    <Resource Include="Assets\cs2.jpg" />
+    <Resource Include="Assets\LoaderNL.ico" />
+    <EmbeddedResource Include="Assets\neverlose-avatar.png"
+                      Condition="Exists('Assets\neverlose-avatar.png')">
+      <LogicalName>LoaderNL.App.neverlose-avatar.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\neverlose-global-data.json"
+                      Condition="Exists('Assets\neverlose-global-data.json')">
+      <LogicalName>LoaderNL.App.neverlose-global-data.json</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\neverlose-libraries.zip"
+                      Condition="Exists('Assets\neverlose-libraries.zip')">
+      <LogicalName>LoaderNL.App.neverlose-libraries.zip</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\neverlose.dll"
+                      Link="neverlose.dll"
+                      Condition="Exists('..\neverlose.dll')" />
+    <EmbeddedResource Include="..\skeet.dll"
+                      Link="skeet.dll"
+                      Condition="Exists('..\skeet.dll')" />
+  </ItemGroup>
+</Project>
