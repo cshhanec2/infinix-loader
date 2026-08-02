@@ -1,5 +1,7 @@
 # INFINIX Loader
 
+![Image alt](https://github.com/cshhanec2/infinix-loader/blob/main/Композиция%201_00000.png
+
 Публичный снимок исходного кода Windows-лоадера INFINIX.
 
 Репозиторий содержит:
